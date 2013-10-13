@@ -1,0 +1,27 @@
+Server=<%= node['zabbix-agent']['server'] %>
+Hostname=<%= node['fqdn'] %>
+StartAgents=5
+DebugLevel=3
+PidFile=<%= node['zabbix-agent']['pid_file'] %>
+LogFile=<%= node['zabbix-agent']['log_file'] %>
+Timeout=3
+# Nginx monitoring
+UserParameter=nginx[*],<%= node['zabbix-agent']['scripts_dir'] %>/nginx_stat.sh "none" $1 $2
+# MySQL monitoring
+# предполагает, что в /root лежит файл .my.cnf с рутовыми логином и паролем (создается модулем mysql для паппета)
+UserParameter=mysql.ping,sudo mysqladmin ping | grep --no-messages --count alive || echo 0
+UserParameter=mysql.version,mysql -V || echo 0
+UserParameter=mysql.status[*],export PATH='/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin';sudo mysqladmin extended-status | grep -iw $1 | sed 's/ //g' | cut -d'|' -f3 || echo 0
+
+# Apache monitoring
+# (Method 3 from here https://www.zabbix.com/wiki/templates/apache)
+UserParameter=apache[*],<%= node['zabbix-agent']['scripts_dir'] %>/apache_stat.sh $1 $2
+
+# Memcache monitoring
+# (from here http://wiki.enchtex.info/howto/zabbix/zabbix_memcache_monitoring)
+UserParameter=memcache[*],<%= node['zabbix-agent']['scripts_dir'] %>/memcache_stat.sh "none" $1
+
+# mdraid monitoring
+# (https://github.com/linuxsquad/zabbix_mdraid)
+UserParameter=mdraid[*], sudo <%= node['zabbix-agent']['scripts_dir'] %>/mdraid_stat.sh -m'$1' -$2'$3'
+UserParameter=mdraid.discovery, sudo <%= node['zabbix-agent']['scripts_dir'] %>/mdraid_stat.sh -D
