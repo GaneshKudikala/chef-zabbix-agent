@@ -3,9 +3,13 @@ zabbix-agent CHANGELOG
 
 This file is used to list changes made in each version of the zabbix-agent cookbook.
 
+0.1.1
+-----
+- First working version
+
 0.1.0
 -----
-- [your_name] - Initial release of zabbix-agent
+- Pavel Safronov <pv.safronov@gmail.com> - Initial release of zabbix-agent
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
