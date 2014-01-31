@@ -25,3 +25,6 @@ UserParameter=memcache[*],<%= node['zabbix-agent']['scripts_dir'] %>/memcache_st
 # (https://github.com/linuxsquad/zabbix_mdraid)
 UserParameter=mdraid[*], sudo <%= node['zabbix-agent']['scripts_dir'] %>/mdraid_stat.sh -m'$1' -$2'$3'
 UserParameter=mdraid.discovery, sudo <%= node['zabbix-agent']['scripts_dir'] %>/mdraid_stat.sh -D
+
+# NTP stratum monitoring
+UserParameter=ntpstratum, sudo /usr/sbin/ntpdate -t 1 -q localhost && echo 0 || echo 1
