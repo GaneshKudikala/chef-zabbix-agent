@@ -19,7 +19,7 @@ when "debian"
   end
 
   apt_repository "zabbix" do
-    uri 'http://repo.zabbix.com/zabbix/2.0/ubuntu/'
+    uri 'http://repo.zabbix.com/zabbix/2.2/ubuntu/'
     distribution node['lsb']['codename']
     components [ "main" ]
     key "http://repo.zabbix.com/zabbix-official-repo.key"
