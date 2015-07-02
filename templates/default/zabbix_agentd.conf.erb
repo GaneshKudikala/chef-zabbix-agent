@@ -28,3 +28,6 @@ UserParameter=mdraid.discovery, sudo <%= node['zabbix-agent']['scripts_dir'] %>/
 
 # NTP stratum monitoring
 UserParameter=ntpstratum, sudo /usr/sbin/ntpdate -t 1 -q localhost && echo 0 || echo 1
+
+# Timestamp monitoring
+UserParameter=timestamp[*], echo $(($(date +%s) - $(date -f $1 +%s)))
