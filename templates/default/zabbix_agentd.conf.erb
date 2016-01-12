@@ -31,3 +31,6 @@ UserParameter=ntpstratum, sudo /usr/sbin/ntpdate -t 1 -q localhost && echo 0 || 
 
 # Timestamp monitoring
 UserParameter=timestamp[*], echo $(($(date +%s) - $(date -f $1 +%s)))
+
+# sudo ps aux
+UserParameter=sudopsaux[*], sudo ps aux | grep $1 | grep -vE 'grep|sudopsaux' | wc -l
